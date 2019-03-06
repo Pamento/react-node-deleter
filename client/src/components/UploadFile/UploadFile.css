@@ -1,0 +1,7 @@
+.browseFile {
+  padding: 0.9em;
+  background-color: lightblue;
+}
+.browseFile>span>input {
+  background-color: lightcoral;
+}

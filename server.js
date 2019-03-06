@@ -10,7 +10,8 @@ const port = process.env.NODE_PORT || 8080;
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  // res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "/", "index.html"));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
