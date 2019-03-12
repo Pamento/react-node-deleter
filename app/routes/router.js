@@ -6,8 +6,6 @@ let convertDocument = require('../services/callJavaconv');
 const path = require('path');
 const root = path.dirname(require.main.filename);
 
-
-
 // var http = require('http');
 // var fs = require('fs');
 /**
@@ -61,7 +59,7 @@ const root = path.dirname(require.main.filename);
 
 
 
-    
+
     // if (fileToBack != null || undefined ) {
     //   res.status(200).sendFile(fileToBack);
     // }
