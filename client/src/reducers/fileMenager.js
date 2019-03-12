@@ -2,7 +2,7 @@
 import * as types from '../constants/actionTypes';
 
 let INITIAL_STATE_FILE = {
-	file: []
+	file: ' from initial state'
 };
 
 export default function(state = INITIAL_STATE_FILE, action){
@@ -10,12 +10,12 @@ export default function(state = INITIAL_STATE_FILE, action){
 		case types.UPLOAD_FILE_SUCCESS:
 			return {
 				...state,
-				file: action.file
+				file: action.value
 			}
 		case types.DELETE_FILE:
 			return {
 				...state,
-				file: state.file - 1
+				file: []
 			}
 		default:
 			return state

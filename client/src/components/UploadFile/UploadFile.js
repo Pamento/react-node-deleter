@@ -11,9 +11,9 @@ class FileInput extends Component {
   fileToUpload = (e) => {
     let file = e.target.files[0];
     let data = new FormData();
-    data.append('colo',file);
+    data.append('converted',file);
     this.props.actions.uploadFile(data);
-    
+    console.log('THIS.props __in__ UPLOADFILE ',this.props)
     // let head = file.name;
     // let reader = new FileReader();
     // reader.readAsDataURL(file);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FileInput from '../containers/UploadFileCont';
-import CKEDITOR from '../containers/CKEditorCont';
+// import CKEDITOR from '../containers/CKEditorCont';
+import DisplayState from '../containers/DisplayStateContainer'
 
 
 class App extends Component {
@@ -9,7 +10,7 @@ class App extends Component {
     return (
       <div>
         <FileInput />
-        <CKEDITOR />
+        <DisplayState />
       </div>
     );
   }

@@ -5,23 +5,23 @@ import CKEditor from 'react-ckeditor-component';
  */
 export default class CKEDITOR extends Component {
     constructor(props) {
-        super(props);
-        this.updateContent = this.updateContent.bind(this);
-        this.state = {
-            content: this.props.state
-        }
+      super(props);
+      this.updateContent = this.updateContent.bind(this);
+      this.state = {
+          content: 'Message :\n\n' +this.props.file
+      }
     }
 
     // nodejs pass doc here
     updateContent = (newContent) => {
-        this.setState({
-            content: newContent
-        })
+      this.setState({
+          content: newContent
+      })
     }
 
     onChange = (evt) => {
       // console.log("onChange fired with event info: ", evt);
-      console.log('CKEditor this.props ',this.props)
+      console.log('CKEditor this.props ',this.props);
       var newContent = evt.editor.getData();
       this.setState({
         content: newContent
@@ -37,16 +37,16 @@ export default class CKEDITOR extends Component {
     }
 
     render() {
-        return (
-            <CKEditor
-              activeClass="p10"
-              content={this.state.content}
-              events={{
-                "blur": this.onBlur,
-                "afterPaste": this.afterPaste,
-                "change": this.onChange
-              }}
-             />
-        );
+      return (
+        <CKEditor
+          activeClass="p10"
+          content={this.state.content}
+          events={{
+            "blur": this.onBlur,
+            "afterPaste": this.afterPaste,
+            "change": this.onChange
+          }}
+        />
+      );
     }
 }

@@ -1,0 +1,8 @@
+.disp {
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.disp p {
+  padding: initial 1em;
+}
