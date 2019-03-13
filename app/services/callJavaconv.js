@@ -1,4 +1,4 @@
-const javaconv = require('./javaconv');
+const javaconv = require('./javaconv-version-0');
 const fs = require('fs');
 const path = require('path');
 
@@ -34,7 +34,7 @@ askedFormatFile = () => {
   return to;
 }
 
-convertDocument = async (fileInfo) => {
+convertDocument = (fileInfo) => {
   // const to = askedFormatFile();
   const to = 'html';
   const root = path.dirname(require.main.filename);
@@ -55,19 +55,28 @@ convertDocument = async (fileInfo) => {
   //   }
   //   file = data;
   // });
-  console.log('_____48______callJavaconv ___after readFile\n ',fileInfo,'\n');
-  
-  // javaconv(to, file, output);
-  if (file != null) {
-    console.log('javaconv Called========before=======================================================\n');
+  console.log('_____48______callJavaconv ___after readFile\n ', fileInfo, '\n');
 
-    const javaConvert = await javaconv(converter, to, file, output);
-    console.log('javaconv Called=================================after===============================\n');
-    
-  } else {
-    return ms;
-  }
-  return await Promise.all(javaConvert);
+    console.log('javaconv Called__,========before=======================================================\n');
+    try {
+      if (fs.existsSync(root+`/public/loads/${fileInfo.originName}`)) {
+        //file exists
+        const javaConvert = javaconv(converter, to, file, output);
+
+        // javaConvert(fs.readFileSync(file))
+        //   .then((fl,error) => {
+        //     if (error) {
+        //       console.error('/////////////////////////// New Error Call javaconv :\n', error);
+        //     }
+        //     console.log(fl.toString());
+        //     return javaconv(this);// what I'm doing here ?
+        //   });
+      }
+    } catch(err) {
+      console.error('callJavaconvert Error :\n',err);
+    }
+
+    console.log('javaconv Called__,===========================================after=====================\n');
 
 }
 

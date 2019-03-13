@@ -34,7 +34,8 @@ const javaconv = (converter, to, file, output) => {
   const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
 
   let convert = async (src) => {
-
+    console.log('_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_');
+    console.log(src,'.\n');
     let proc = await spawn(command, args, options);
 
     // proc.on('error', reject);
@@ -65,6 +66,10 @@ const javaconv = (converter, to, file, output) => {
     });
 
     proc.stdin.write(src);
+    proc.stdin.on('end',(data)=>{
+      console.log('_______________________________________stdin____________________________________________________')
+      return data.toString();
+    })
     proc.stdin.end();
   };
 

@@ -1,9 +1,11 @@
 require('custom-env').env();
 const express        = require('express');
 const bodyParser     = require('body-parser');
+const cors           = require('cors');
 const path = require("path");
 
 const app = express();
+app.use(cors());
 const port = process.env.NODE_PORT || 8080;
 
 app.use(function(req, res, next) {
