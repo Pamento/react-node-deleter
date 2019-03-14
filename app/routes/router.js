@@ -42,8 +42,7 @@ var upload = multer({ storage: storage });
 
 
 // upload.single('myFile') is the name of input field from form file upload
-router.post('/files', upload.single('converted'), async (req, res) => {
-  try {
+router.post('/files', upload.single('converted'), (req, res) => {
     let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
     extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.'), req.file.originalname.length),
     fileInfo = {
@@ -52,14 +51,15 @@ router.post('/files', upload.single('converted'), async (req, res) => {
       name: name,
       extention: extention
     }
-    await convertDocument(fileInfo);
-    console.log("route OK");
-    res.status(200).sendFile(root + '/public/loads/docx.html');
-    console.log('file send');
-  } catch (e) {
+
+    let docConvertedToBack = convertDocument(fileInfo);
+    docConvertedToBack().then(()=>{
+      console.log('file send');
+      res.status(200).sendFile(root + '/public/loads/docx.html');
+    }).catch( (e) => {
     console.error("route FAIL :\n",e.Error,'\n');
     res.sendStatus(400).send('developer is drunck');
-  }
+  })
 });
 
 // router.post('/files', upload.single('converted'), (req, res)
