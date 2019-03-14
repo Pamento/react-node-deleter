@@ -63,17 +63,17 @@ router.post('/files', upload.single('converted'), (req, res) => {
       fileName: fileName.toString(),
       output: output
     }
-  console.log(req.file);
-    console.log(fileInfo);
+  // console.log(req.file);
+  //   console.log(fileInfo);
     
-  console.log("inside route", fileInfo.output);
-  let doc2 = convertDocument(fileInfo)
- doc2().then(contentHtml =>{
-   console.log("after convert");
+  // console.log("inside route", fileInfo.output);
+  let doc2 = convertDocument(fileInfo);
+  doc2().then(contentHtml =>{
+    //  console.log("after convert");
+    console.log("log content",contentHtml);
     res.status(200).send(contentHtml);
-   console.log("log content",contentHtml);
-   
- })
+
+  })
   //
   // if (fileToBack != null || undefined ) {
 

@@ -1,4 +1,4 @@
-const javaconv = require('./javaconv-version-0');
+const javaconv = require('./javaconv');
 const fs = require('fs');
 const path = require('path');
 
@@ -45,7 +45,7 @@ const convertDocument = (fileInfo) => {
   let file = root +"/"+fileInfo.src
   console.log("callJavaconv",fileInfo);
   
-  let converter = '/home/kevin/code/kevin-take-it/app/services/convert-0.0.1-SNAPSHOT.jar';
+  let converter = root+'/app/services/convert-0.0.1-SNAPSHOT.jar';
   
   let ms = 'Non file recived';
   return javaconv(converter,to,file,fileInfo.output)
