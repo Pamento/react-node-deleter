@@ -4,6 +4,9 @@
  */
 'use strict';
 const spawn = require('child_process').spawn;
+const cp = require('child-process-es6-promise');
+const fs = require('fs');
+
 // require('colors');
 // let pwd = spawn('pwd');
 // pwd.stdout.on('data', data => {
@@ -30,51 +33,45 @@ const spawn = require('child_process').spawn;
 const javaconv = (converter, to, file, output) => {
 
   const command = 'java';
-  const options = { stdio: 'ignore', shell: true };
+  const options = { shell: true };
   const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
-
-  let convert = async (src) => {
-
-    let proc = await spawn(command, args, options);
+  console.log("output inside",output.toString());
+  console.log("args:",args);
+  
+  let convert = () => new Promise((resolve,reject)=> {
+    
+    let proc = spawn(command, args, options);
 
     // proc.on('error', reject);
+
+
+    proc.on('error', reject);
     let data = '';
-
-    proc.stdout.on('data', (snip) => {
-      data += snip.toString();
-      console.log('data of file converted :', data)
+    proc.stdout.on('data', chunk => {
+      console.log("chunk",chunk);
+      
+      data += chunk.toString();
     });
-
-    proc.stdout.on('end', () => { return data; });
-    // proc.stdout.on('error', reject);
-
-    proc.stdout.on('error', function (err) {
-      console.log("\x1b[31m", 'stdout error: ', err);
+    proc.stdout.on('end', () => {
+    //console.log("data",data);
+    fs.readFile(output,(err,content)=>{
+      if (err) throw err;
+     // console.log("--------------------------My data",data.toString());
+      
+      resolve(content.toString())
+    })
     });
-
-    var exit_msg = 'Exited with code... ';
-
-    proc.on('exit', function (code) {
-      if (code != 0) {
-        console.log("\x1b[31m", exit_msg, code);
-        process.exit(1); // Or whatever you want to handle errors.
-      }
-
-      console.log("\x1b[32m", exit_msg, code);
-      // The code you want to execute once your command is done goes here.
-    });
-
-    proc.stdin.write(src);
-    proc.stdin.end();
-  };
+    proc.stdout.on('error', reject);
+    proc.stdin.on("end",()=>{
+    
+    })
+  });
 
   convert.stream = srcStream => {
     const proc = spawn(command, option);
     srcStream.pipe(proc.stdin);
     return proc.stdout;
   };
-  convert();
-
   return convert;
 };
 
