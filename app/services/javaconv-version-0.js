@@ -2,19 +2,12 @@
 const spawn = require('child_process').spawn;
 
 const javaconv = (converter, to, file, output) => {
-// const javaconv = (from, to, ...args) => {
-//   const option = ['-f', from, '-t', to].concat(args);
-
-const command = 'java';
-const options = { shell: true };
-const args = ['-jar', converter,'-f', to, '-i', file, '-o', output];
-
-
+  const command = 'java';
+  const options = { shell: true };
+  const args = ['-jar', converter,'-f', to, '-i', file, '-o', output];
 
   const convert = src => new Promise((resolve, reject) => {
-    console.log(src);
-    
-    
+
     const proc = spawn(command, args, options);
     proc.on('error', reject);
     let data = '';
@@ -22,6 +15,9 @@ const args = ['-jar', converter,'-f', to, '-i', file, '-o', output];
       data += chunk.toString();
     });
     proc.stdout.on('end', () => resolve(data));
+    proc.stderr.on('data', (data) => {
+      console.log(`stderr: ${data}`);
+    });
     proc.stdout.on('error', reject);
     proc.stdin.write(src);
     proc.stdin.on('error',(err) => {
