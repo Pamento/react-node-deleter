@@ -55,29 +55,30 @@ convertDocument = (fileInfo) => {
   //   }
   //   file = data;
   // });
-  console.log('_____48______callJavaconv ___after readFile\n ', fileInfo, '\n');
+  // console.log('_____48______callJavaconv ___after readFile\n ', fileInfo, '\n');
 
-    console.log('javaconv Called__,========before=======================================================\n');
-    try {
-      if (fs.existsSync(root+`/public/loads/${fileInfo.originName}`)) {
-        //file exists
-        const javaConvert = javaconv(converter, to, file, output);
+  //   console.log('javaconv Called__,========before=======================================================\n');
+  //   try {
+  //     if (fs.existsSync(root+`/public/loads/${fileInfo.originName}`)) {
+  //       //file exists
+        
 
-        javaConvert(fs.readFileSync(file))
-          .then((fl,error) => {
-            if (error) {
-              console.error('/////////////////////////// New Error Call javaconv :\n', error);
-            }
-            console.log(fl.toString());
-            return javaconv(this);// what I'm doing here ?
-          });
-      }
-    } catch(err) {
-      console.error('callJavaconvert Error :\n',err);
-    }
+  //       javaConvert(fs.readFileSync(file))
+  //         .then((fl,error) => {
+  //           if (error) {
+  //             console.error('/////////////////////////// New Error Call javaconv :\n', error);
+  //           }
+  //           console.log(fl.toString());
+  //           return javaconv(this);// what I'm doing here ?
+  //         });
+  //     }
+  //   } catch(err) {
+  //     console.error('callJavaconvert Error :\n',err);
+  //   }
 
     console.log('javaconv Called__,===========================================after=====================\n');
 
+  return javaconv(converter, to, file, output);
 }
 
 module.exports = convertDocument;
