@@ -41,7 +41,7 @@ router.post('/files', upload.single('converted'), (req, res) => {
       res.status(200).sendFile(root + '/public/loads/docx.html');
     }).catch( (e) => {
     console.error("route FAIL :\n",e.Error,'\n');
-    res.sendStatus(400).send('developer is drunck');
+    res.status(400).send('developer is drunck');
   })
 });
 
