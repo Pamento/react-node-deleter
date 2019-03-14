@@ -4,7 +4,7 @@ const spawn = require('child_process').spawn;
 const javaconv = (converter, to, file, output) => {
   const command = 'java';
   const options = { shell: true };
-  const args = ['-jar', converter,'-f', to, '-i', file, '-o', output];
+  const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
 
   const convert = src => new Promise((resolve, reject) => {
 
@@ -20,10 +20,10 @@ const javaconv = (converter, to, file, output) => {
     });
     proc.stdout.on('error', reject);
     proc.stdin.write(src);
-    proc.stdin.on('error',(err) => {
-      console.log('write stream error ',err)
+    proc.stdin.on('error', (err) => {
+      console.log('write stream error ', err)
     });
-    proc.stdin.on('end',()=>{
+    proc.stdin.on('end', () => {
       console.log('end of transfer data');
       resolve(data);
     })
@@ -31,7 +31,7 @@ const javaconv = (converter, to, file, output) => {
   });
 
   convert.stream = srcStream => {
-    const proc = spawn(command, option);
+    const proc = spawn(command, options);
     srcStream.pipe(proc.stdin);
     return proc.stdout;
   };
