@@ -18,7 +18,7 @@ let args = [
   '-f',
   'html',
   '-i',
-  '/home/pawel/codem/nodeServerReact/app/services/docx_Test.docx',
+  '/home/pawel/codem/nodeServerReact/public/loads/docx_Test.docx',
   '-o',
   '/home/pawel/codem/nodeServerReact/public/loads/docx.html'
 ];

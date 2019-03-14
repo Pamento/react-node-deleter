@@ -52,17 +52,15 @@ router.post('/files', upload.single('converted'), async (req, res) => {
       name: name,
       extention: extention
     }
-    console.log('_____________________________________ROUTE POST START___FILE INFO___:::\n',fileInfo);
     await convertDocument(fileInfo);
     console.log("route OK");
-    // console.log('check file before SEND <|> <|> <|> <|> <|> <|> <|> <|> <|> <|>:\n', fileToBack);
-    res.status(200).sendFile(root + '/public/loads/docx.html')
+    res.status(200).sendFile(root + '/public/loads/docx.html');
+    console.log('file send');
   } catch (e) {
     console.error("route FAIL :\n",e.Error,'\n');
     res.sendStatus(400).send('developer is drunck');
   }
 });
-
 
 // router.post('/files', upload.single('converted'), (req, res)
 //   .then(

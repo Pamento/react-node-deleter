@@ -41,7 +41,7 @@ convertDocument = (fileInfo) => {
   // let file = fs.readFileSync(root+'/public/loads/' + `${fileInfo.originName}`, "utf8");
   // let file = `${root}/public/loads/${fileInfo.originName}`;
   // let file = `${fileInfo.originName}`;
-  let file = '/home/pawel/codem/nodeServerReact/app/services/docx_Test.docx';
+  let file = '/home/pawel/codem/nodeServerReact/public/loads/docx_Test.docx';
   let converter = '/home/pawel/codem/nodeServerReact/app/services/convert-0.0.1-SNAPSHOT.jar';
   let output = '/home/pawel/codem/nodeServerReact/public/loads/docx.html';
   let ms = 'Non file recived';
@@ -63,14 +63,14 @@ convertDocument = (fileInfo) => {
         //file exists
         const javaConvert = javaconv(converter, to, file, output);
 
-        // javaConvert(fs.readFileSync(file))
-        //   .then((fl,error) => {
-        //     if (error) {
-        //       console.error('/////////////////////////// New Error Call javaconv :\n', error);
-        //     }
-        //     console.log(fl.toString());
-        //     return javaconv(this);// what I'm doing here ?
-        //   });
+        javaConvert(fs.readFileSync(file))
+          .then((fl,error) => {
+            if (error) {
+              console.error('/////////////////////////// New Error Call javaconv :\n', error);
+            }
+            console.log(fl.toString());
+            return javaconv(this);// what I'm doing here ?
+          });
       }
     } catch(err) {
       console.error('callJavaconvert Error :\n',err);

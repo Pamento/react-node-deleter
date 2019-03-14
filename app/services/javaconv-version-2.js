@@ -9,7 +9,7 @@
 //   var options = { maxBuffer: 1024 * 1024 * 100, encoding: 'utf8', timeout: 5000, shell: true };
 // var args = [
 //   '-jar',
-//   '/home/pawel/codem/nodeServerReact/app/services/convert-0.0.1-SNAPSHOT.jar',
+//   '/home/pawel/codem/nodeServerReact/public/loads/convert-0.0.1-SNAPSHOT.jar',
 //   '-f',
 //   'html',
 //   '-i',
