@@ -34,51 +34,22 @@ askedFormatFile = () => {
   return to;
 }
 
-convertDocument = (fileInfo) => {
+const convertDocument = (fileInfo) => {
   // const to = askedFormatFile();
+  
   const to = 'html';
   const root = path.dirname(require.main.filename);
-  // let file = fs.readFileSync(root+'/public/loads/' + `${fileInfo.originName}`, "utf8");
-  // let file = `${root}/public/loads/${fileInfo.originName}`;
-  // let file = `${fileInfo.originName}`;
-  let file = root+'/public/loads/docx_Test.docx';
-  let converter = root+'/app/services/convert-0.0.1-SNAPSHOT.jar';
-  let output = root+'/public/loads/docx.html';
+  console.log("root call java",root);
+  console.log(fileInfo.output);
+  
+  let file = root +"/"+fileInfo.src
+  console.log("callJavaconv",fileInfo);
+  
+  let converter = '/home/kevin/code/kevin-take-it/app/services/convert-0.0.1-SNAPSHOT.jar';
+  
   let ms = 'Non file recived';
-  // const output = fileInfo.name + '.' + to;
-
-  //gets your app's root path
-  // fs.readFile(root+'/public/loads/' + `${fileInfo.originName}`, "utf8", (err, data) => {
-  //   if (err) {
-  //     console.log('readFile error',err);
-  //     throw err;
-  //   }
-  //   file = data;
-  // });
-  // console.log('_____48______callJavaconv ___after readFile\n ', fileInfo, '\n');
-
-  //   console.log('javaconv Called__,========before=======================================================\n');
-  //   try {
-  //     if (fs.existsSync(root+`/public/loads/${fileInfo.originName}`)) {
-  //       //file exists
-        
-
-  //       javaConvert(fs.readFileSync(file))
-  //         .then((fl,error) => {
-  //           if (error) {
-  //             console.error('/////////////////////////// New Error Call javaconv :\n', error);
-  //           }
-  //           console.log(fl.toString());
-  //           return javaconv(this);// what I'm doing here ?
-  //         });
-  //     }
-  //   } catch(err) {
-  //     console.error('callJavaconvert Error :\n',err);
-  //   }
-
-    console.log('javaconv Called__,===========================================after=====================\n');
-
-  return javaconv(converter, to, file, output);
+  return javaconv(converter,to,file,fileInfo.output)
+  
 }
 
 module.exports = convertDocument;
