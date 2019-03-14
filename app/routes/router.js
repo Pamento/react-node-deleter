@@ -24,6 +24,16 @@ const crypto = require('crypto');
       cb(null, Date.now() + ext)
     }
  */
+const del = require('del');
+
+(async () => {
+  try {
+    const deletedPaths = await del(['public/loads/**', '!public/loads']);
+    console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
+  } catch (error) {
+    console.error('delete file program has crached :',error);
+  }
+})();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
