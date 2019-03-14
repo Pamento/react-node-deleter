@@ -41,9 +41,9 @@ convertDocument = (fileInfo) => {
   // let file = fs.readFileSync(root+'/public/loads/' + `${fileInfo.originName}`, "utf8");
   // let file = `${root}/public/loads/${fileInfo.originName}`;
   // let file = `${fileInfo.originName}`;
-  let file = '/home/pawel/codem/nodeServerReact/public/loads/docx_Test.docx';
-  let converter = '/home/pawel/codem/nodeServerReact/app/services/convert-0.0.1-SNAPSHOT.jar';
-  let output = '/home/pawel/codem/nodeServerReact/public/loads/docx.html';
+  let file = root+'/public/loads/docx_Test.docx';
+  let converter = root+'/app/services/convert-0.0.1-SNAPSHOT.jar';
+  let output = root+'/public/loads/docx.html';
   let ms = 'Non file recived';
   // const output = fileInfo.name + '.' + to;
 
