@@ -5,13 +5,14 @@
  * @function convertDocument .. convert the file in html and resend it to the user interface
  * @param upload.single('myFile') the 'myFile' is the name of input field from form file upload
  */
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-let convertDocument = require('../services/callJavaconv');
-let extentionFinder = require("../services/extentionFinder")
+let convertDocument = require('../services/convertDocument');
+// let extentionFinder = require("../services/extentionFinder");
 const path = require('path');
-const crypto = require('crypto');
+// const crypto = require('crypto');
 const del = require('del');
 
 (async () => {
