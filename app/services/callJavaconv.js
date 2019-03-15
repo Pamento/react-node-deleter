@@ -36,20 +36,12 @@ askedFormatFile = () => {
 
 const convertDocument = (fileInfo) => {
   // const to = askedFormatFile();
-  
   const to = 'html';
   const root = path.dirname(require.main.filename);
-  console.log("root call java",root);
-  console.log(fileInfo.output);
-  
   let file = root +"/"+fileInfo.src
-  console.log("callJavaconv",fileInfo);
-  
   let converter = root+'/app/services/convert-0.0.1-SNAPSHOT.jar';
-  
-  let ms = 'Non file recived';
-  return javaconv(converter,to,file,fileInfo.output)
-  
+
+  return javaconv(converter,to,file,fileInfo.output);
 }
 
 module.exports = convertDocument;

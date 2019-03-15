@@ -1,29 +1,17 @@
+/**
+ * @function del delete uploaded files from user interface in the moment of restarting express(node.js) application
+ * @function multer.diskStorage uploads file selected by user and stored them in /public/loads folder
+ * @function router.post get the info about file and by ..(@function convertDocument)
+ * @function convertDocument .. convert the file in html and resend it to the user interface
+ * @param upload.single('myFile') the 'myFile' is the name of input field from form file upload
+ */
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-let javaConv = require('../services/javaconv');
 let convertDocument = require('../services/callJavaconv');
 let extentionFinder = require("../services/extentionFinder")
 const path = require('path');
-
-const fs = require('fs');
 const crypto = require('crypto');
-
-// var http = require('http');
-// var fs = require('fs');
-/**
- *     destination: function (req, file, cb) {
-      cb(null, '/app/public/uploads')
-    },
- *     filename: function(req, file, cb) {
-      cb(null, file.fieldname + path.extname(file.originalname));
-    },
-    or:
-        filename: function (req, file, cb) {
-      let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
-      cb(null, Date.now() + ext)
-    }
- */
 const del = require('del');
 
 (async () => {
@@ -31,7 +19,7 @@ const del = require('del');
     const deletedPaths = await del(['public/loads/**', '!public/loads']);
     console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
   } catch (error) {
-    console.error('delete file program has crached :',error);
+    console.error('delete file program has crached :', error);
   }
 })();
 
@@ -42,18 +30,17 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     //console.log(file.mimetype);
     let customFileName = crypto.randomBytes(8).toString('hex')
-    cb(null, customFileName +"-"+ Date.now()+ '.' + extentionFinder(file.originalname))
+    cb(null, customFileName + "-" + Date.now() + '.' + extentionFinder(file.originalname))
   }
 });
 var upload = multer({ storage: storage });
 
-
-// upload.single('myFile') is the name of input field from form file upload
 router.post('/files', upload.single('converted'), (req, res) => {
   const rootDir = path.dirname(require.main.filename);
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
     fileName = req.file.filename,
-    output = rootDir +"/public/loads/" + fileName + '.html',
+    newFileName = fileName.substring(0,fileName.lastIndexOf('.'));
+    output = rootDir + "/public/loads/" + newFileName + '.html',
     extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.'), req.file.originalname.length),
     fileInfo = {
       src: req.file.path,
@@ -63,23 +50,13 @@ router.post('/files', upload.single('converted'), (req, res) => {
       fileName: fileName.toString(),
       output: output
     }
-  // console.log(req.file);
-  //   console.log(fileInfo);
-    
-  // console.log("inside route", fileInfo.output);
+
   let doc2 = convertDocument(fileInfo);
-  doc2().then(contentHtml =>{
+  doc2().then(contentHtml => {
     //  console.log("after convert");
-    console.log("log content",contentHtml);
+    console.log("node sending data :", typeof contentHtml);
     res.status(200).send(contentHtml);
 
-  })
-  //
-  // if (fileToBack != null || undefined ) {
-
-  // }
-  // else {
-  //   res.status(200).send('File convertion failed.');
-  // }
+  });
 });
 module.exports = router;

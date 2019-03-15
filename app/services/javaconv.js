@@ -35,40 +35,37 @@ const javaconv = (converter, to, file, output) => {
   const command = 'java';
   const options = { shell: true };
   const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
-  console.log("output inside",output.toString());
-  console.log("args:",args);
-  
+
   let convert = () => new Promise((resolve,reject)=> {
-    
+
     let proc = spawn(command, args, options);
 
-    // proc.on('error', reject);
-
-
-    proc.on('error', reject);
+    proc.on('error', (error, reject)=>{
+      console.error('child_process.on Error !',error);
+      reject
+    });
+    proc.stdout.on('error', (error, reject)=>{
+      console.error('child_process.stdout.on Error !',error);
+      reject
+    });
     let data = '';
     proc.stdout.on('data', chunk => {
-      console.log("chunk",chunk);
-      
       data += chunk.toString();
     });
     proc.stdout.on('end', () => {
-    //console.log("data",data);
-    fs.readFile(output,(err,content)=>{
-      if (err) throw err;
-     // console.log("--------------------------My data",data.toString());
-      
-      resolve(content.toString())
-    })
+      fs.readFile(output,(err,content)=>{
+        if (err) throw err;
+        resolve(content.toString())
+      })
     });
     proc.stdout.on('error', reject);
-    proc.stdin.on("end",()=>{
-    
+    proc.stderr.on('data',(data)=>{
+      console.error('child_process.stderr.on Error !',data);
     })
   });
 
   convert.stream = srcStream => {
-    const proc = spawn(command, option);
+    const proc = spawn(command, options);
     srcStream.pipe(proc.stdin);
     return proc.stdout;
   };
