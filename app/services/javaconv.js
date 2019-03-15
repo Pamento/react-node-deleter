@@ -4,12 +4,6 @@
  */
 'use strict';
 const spawn = require('child_process').spawn;
-// require('colors');
-// let pwd = spawn('pwd');
-// pwd.stdout.on('data', data => {
-//   console.log('data from pwd ',data.toString());
-// })
-
 
 // const command = 'java';
 // var options = { maxBuffer: 1024 * 1024 * 100, encoding: 'utf8', timeout: 5000, shell: true };
@@ -30,7 +24,7 @@ const spawn = require('child_process').spawn;
 const javaconv = (converter, to, file, output) => {
 
   const command = 'java';
-  const options = { stdio: 'ignore', shell: true };
+  const options = { shell: true };
   const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
 
   let convert = async (src) => {
@@ -78,7 +72,6 @@ const javaconv = (converter, to, file, output) => {
     srcStream.pipe(proc.stdin);
     return proc.stdout;
   };
-  convert();
 
   return convert;
 };

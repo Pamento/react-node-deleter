@@ -6,7 +6,7 @@ const javaconv = (converter, to, file, output) => {
   const options = { shell: true };
   const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
 
-  const convert = src => new Promise((resolve, reject) => {
+  const convert = () => new Promise((resolve, reject) => {
 
     const proc = spawn(command, args, options);
     proc.on('error', reject);
