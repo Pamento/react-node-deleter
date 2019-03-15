@@ -27,11 +27,14 @@ var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/loads')
   },
-  filename: function (req, file, cb) {
-    //console.log(file.mimetype);
-    let customFileName = crypto.randomBytes(8).toString('hex')
-    cb(null, customFileName + "-" + Date.now() + '.' + extentionFinder(file.originalname))
+  filename: function (req,file,cb) {
+    cb(null,file.originalname)
   }
+  // filename: function (req, file, cb) {
+  //   //console.log(file.mimetype);
+  //   let customFileName = crypto.randomBytes(8).toString('hex')
+  //   cb(null, customFileName + "-" + Date.now() + '.' + extentionFinder(file.originalname))
+  // }
 });
 var upload = multer({ storage: storage });
 
@@ -40,7 +43,7 @@ router.post('/files', upload.single('converted'), (req, res) => {
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
     fileName = req.file.filename,
     newFileName = fileName.substring(0,fileName.lastIndexOf('.'));
-    output = rootDir + "/public/loads/" + newFileName + '.html',
+    output = rootDir + "/public/loads/" + name + '.html',
     extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.'), req.file.originalname.length),
     fileInfo = {
       src: req.file.path,
@@ -53,7 +56,6 @@ router.post('/files', upload.single('converted'), (req, res) => {
 
   let doc2 = convertDocument(fileInfo);
   doc2().then(contentHtml => {
-    //  console.log("after convert");
     console.log("node sending data :", typeof contentHtml);
     res.status(200).send(contentHtml);
 
