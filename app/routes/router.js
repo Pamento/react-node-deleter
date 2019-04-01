@@ -9,20 +9,21 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-let convertDocument = require('../services/convertDocument');
+const saveFilesInfos = require('../services/saveStatConvertedFile');
+let convertDocument = require('../convertor/convertDocument');
 // let extentionFinder = require("../services/extentionFinder");
 const path = require('path');
 // const crypto = require('crypto');
 const del = require('del');
 
-(async () => {
-  try {
-    const deletedPaths = await del(['public/loads/**', '!public/loads']);
-    console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
-  } catch (error) {
-    console.error('delete file program has crached :', error);
-  }
-})();
+// (async () => {
+//   try {
+//     const deletedPaths = await del(['public/loads/**', '!public/loads']);
+//     console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
+//   } catch (error) {
+//     console.error('delete file program has crached :', error);
+//   }
+// })();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,6 +55,18 @@ router.post('/files', upload.single('converted'), (req, res) => {
       fileName: fileName.toString(),
       output: output
     }
+
+    /////////////////////////////////////////////////////////////::: test for multiples files
+    // const nest = 3;
+    // for (let index = 0; index < nest; index++) {
+
+    //   let adss = { name: `${fileInfo.name + index}`};
+    //   var copie = Object.assign(fileInfo, adss);
+    //   console.log('router info file send');
+    //   saveFilesInfos(copie);
+    // }
+
+  saveFilesInfos(fileInfo);
 
   let doc2 = convertDocument(fileInfo);
   doc2().then(contentHtml => {

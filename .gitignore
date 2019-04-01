@@ -1,6 +1,7 @@
 node_modules/
 config/db.js
 ex.md
+package-lock.json
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies

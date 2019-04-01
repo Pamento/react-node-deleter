@@ -37,7 +37,7 @@ const convertDocument = (fileInfo) => {
   const to = 'html';
   const root = path.dirname(require.main.filename);
   let file = root +"/"+fileInfo.src
-  let converter = root+'/app/services/convert-0.0.1-SNAPSHOT.jar';
+  let converter = root+'/app/convertor/convert-0.0.1-SNAPSHOT.jar';
 
   return javaconv(converter,to,file,fileInfo.output);
 }
