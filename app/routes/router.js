@@ -13,17 +13,18 @@ const saveFilesInfos = require('../services/saveStatConvertedFile');
 let convertDocument = require('../convertor/convertDocument');
 // let extentionFinder = require("../services/extentionFinder");
 const path = require('path');
-// const crypto = require('crypto');
+const appRoot = path.dirname(require.main.filename);
+const crypto = require('crypto');
 const del = require('del');
 
-// (async () => {
-//   try {
-//     const deletedPaths = await del(['public/loads/**', '!public/loads']);
-//     console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
-//   } catch (error) {
-//     console.error('delete file program has crached :', error);
-//   }
-// })();
+(async () => {
+  try {
+    const deletedPaths = await del(['public/loads/**', '!public/loads']);
+    console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
+  } catch (error) {
+    console.error('delete file program has crached :', error);
+  }
+})();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,18 +42,18 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/files', upload.single('converted'), (req, res) => {
-  const rootDir = path.dirname(require.main.filename);
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
     fileName = req.file.filename,
-    newFileName = fileName.substring(0,fileName.lastIndexOf('.'));
-    output = rootDir + "/public/loads/" + name + '.html',
-    extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.'), req.file.originalname.length),
+    newFileName = crypto.randomBytes(8).toString('hex') + "-" + Date.now(),
+    output = appRoot + "/public/loads/",
+    // output = appRoot + "/public/loads/" + name + '.html',
+    extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.')+1, req.file.originalname.length),
     fileInfo = {
       src: req.file.path,
       originName: req.file.originalname,
       name: name,
       extention: extention,
-      fileName: fileName.toString(),
+      newFileName: newFileName,
       output: output
     }
 
@@ -65,15 +66,20 @@ router.post('/files', upload.single('converted'), (req, res) => {
     //   console.log('router info file send');
     //   saveFilesInfos(copie);
     // }
+    if(fileInfo.extention === 'html'){
+      console.log('_');
+    } else {
+      saveFilesInfos(fileInfo);
+    }
 
-  saveFilesInfos(fileInfo);
 
-  let doc2 = convertDocument(fileInfo);
+
+  const doc2 = convertDocument(fileInfo);
   doc2().then(contentHtml => {
     console.log("node sending data :", typeof contentHtml);
     res.status(200).send(contentHtml);
-
-  });
+console.log('AFTER SEND');
+  }).catch((err)=> {throw err});
 });
 
 module.exports = router;

@@ -11,7 +11,7 @@ var fileDir = appRoot + '/public/loads/mdb.json';
  * @param {*} iFile new stat abaout converted file
  * @var jsonFile it takes the data type string form mdb.json file, elaborate them on the type array and finly saved them as string.
  */
-function   newFileInfo(iFile) {
+function newFileInfo(iFile) {
 
   fs.readFile(fileDir, { flag: 'a+' }, (err, content) => {
     if (err) throw err;

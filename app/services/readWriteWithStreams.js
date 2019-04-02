@@ -126,5 +126,8 @@ bufferStream.pipe(table.createWriteStream(metadata))
                        .on('complete', function(metadata) {
                          console.log('job completed', metadata);
                        });
-                   });
+                   })
+ *
+ *
+ * https://stackoverflow.com/questions/14458508/node-js-shell-command-execution
  */
