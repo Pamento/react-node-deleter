@@ -74,12 +74,16 @@ router.post('/files', upload.single('converted'), (req, res) => {
 
 
 
-  const doc2 = convertDocument(fileInfo);
-  doc2().then(contentHtml => {
-    console.log("node sending data :", typeof contentHtml);
-    res.status(200).send(contentHtml);
-console.log('AFTER SEND');
-  }).catch((err)=> {throw err});
+   convertDocument(fileInfo).then(value=>{
+     console.log( "1erevalue",value);
+     
+     let doc = value()
+     doc.then(contentHtml =>{
+      console.log("node sending data :", typeof contentHtml);
+      res.status(200).send(contentHtml);
+     })
+   });
+ 
 });
 
 module.exports = router;

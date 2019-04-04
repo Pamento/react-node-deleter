@@ -11,7 +11,7 @@ const findInMdbJson = require('../services/findFileExtention');
 
 
 
-const convertDocument = (fileInfo) => {
+const convertDocument = async (fileInfo) => {
   let to;
   let file = appRoot +"/"+fileInfo.src;
   console.log('BEFOR CONVERT\n',file);
@@ -19,20 +19,24 @@ const convertDocument = (fileInfo) => {
   let output;
 
   if (fileInfo.extention === 'html') {
-
     /**
      * Promise
      */
     let ext = findInMdbJson(fileInfo.name);
-    ext = ext().then((data) => {
-      to = data;
-      output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
-      console.log('PROMISE ',data);
-      return javaconv(converter,to,file,output);
-    }).then()
-    .catch((err) => {
-      throw err;
-    });
+     to =await ext().finally()
+     console.log(to);
+     output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
+     return await javaconv(converter,to,file,output);
+    //  ext().finally().then( (data) => {
+    //   to = data;
+    //   output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
+    //   console.log('PROMISE ',data);
+    //   return to
+      
+    // }).then()
+    // .catch((err) => {
+    //   throw err;
+    // });
 
 
 
@@ -40,7 +44,7 @@ const convertDocument = (fileInfo) => {
   } else {
     to = 'html';
     output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
-    return javaconv(converter,to,file,output);
+    return await javaconv(converter,to,file,output);
   }
 }
 
