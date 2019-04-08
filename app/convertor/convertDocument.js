@@ -2,6 +2,7 @@
  * @function convertDocument is the middleware between router.post and javanov.js
  * @function extention & @function askedFormatFile is for future reconvertion from html back to original type file
  */
+const memoize = require('../services/memoize');
 const javaconv = require('./javaconv');
 const path = require('path');
 const appRoot = path.dirname(require.main.filename);
@@ -19,11 +20,16 @@ const convertDocument = async (fileInfo) => {
     to = await ext().finally();
     console.log('File will by converted to : "' + to + '" format.');
     output = appRoot + "/public/loads/" + fileInfo.originName + '.' + to;
-    return await javaconv(converter, to, file, output);
+    let converting = memoize(async () => javaconv(converter, to, file, output));
+    let convertDon = await converting;
+    return convertDon;
+    // return await javaconv(converter, to, file, output);
   } else {
     to = 'html';
     output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
-    return await javaconv(converter, to, file, output);
+    let converting = memoize(async () => javaconv(converter, to, file, output));
+    let convertDon = await converting;
+    return convertDon;
   }
 }
 
