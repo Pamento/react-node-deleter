@@ -28,7 +28,7 @@ const javaconv = (converter, to, file, output) => {
       reject
     });
     proc.stdout.on('data', () => {
-      console.log('convert in progress ... +\n',output);
+      console.log('convert in progress ...');
     })
     proc.stdout.on('end', () => {
       fs.readFile(output, (err, content) => {

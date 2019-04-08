@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+var fs = require('fs');
 var path = require('path');
 var appRoot = path.dirname(require.main.filename);
 var fileDir = appRoot + '/public/loads/mdb.json';
@@ -22,7 +22,7 @@ function newFileInfo(iFile) {
       jsonFile = [];
       l = jsonFile.length;
     } else {
-      var parseJson = JSON.parse(jsonFile);
+      let parseJson = JSON.parse(jsonFile);
       jsonFile = parseJson;
       l = jsonFile.length;
       for (const key of jsonFile) {

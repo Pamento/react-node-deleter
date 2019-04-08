@@ -13,29 +13,27 @@ const findInMdbJson = (fileToFind) => {
     readFileAsync(fileDir, (err, content) => {
       if (err) reject(err);
     })
-    .then(content => {
-      let fexist = [], file,
+      .then(content => {
+        let fexist = [], file,
           jsonFile = content.toString();
 
-      if ((jsonFile === '') || (typeof jsonFile === 'undefined')) {
-        to = 'html';
-      } else {
-        var parseJson = JSON.parse(jsonFile);
-        jsonFile = parseJson;
-        for (const key of jsonFile) {
-          let k = Object.keys(key)
-          fexist.push(k[0]);
+        if ((jsonFile === '') || (typeof jsonFile === 'undefined')) {
+          to = 'html';
+        } else {
+          var parseJson = JSON.parse(jsonFile);
+          jsonFile = parseJson;
+          for (const key of jsonFile) {
+            let k = Object.keys(key)
+            fexist.push(k[0]);
+          }
+          file = jsonFile[fexist.indexOf(fileToFind)]
+          to = file[fileToFind].extention;
         }
-        console.log('keys list:\n', fexist);
-        file = jsonFile[fexist.indexOf(fileToFind)]
-        to = file[fileToFind].extention;
-      }
-      resolve(to);
-    })
-    .catch((err)=>{
-      console.error('Error in findFileExtention on readFileAsync()\n',err);
-    });
-
+        resolve(to);
+      })
+      .catch(err => {
+        console.error('Error in findFileExtention on readFileAsync()\n', err);
+      });
   });
   return find;
 }
