@@ -63,9 +63,6 @@ router.post('/files', upload.single('converted'), (req, res) => {
   }
 
   convertDocument(fileInfo).then(value => {
-    console.log('############################################################');
-    console.log("1ere value on router promise :\n", value);
-    console.log('############################################################');
 
     let doc = value();
     doc.then(contentHtml => {

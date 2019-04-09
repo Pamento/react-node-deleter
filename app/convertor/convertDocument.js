@@ -20,16 +20,15 @@ const convertDocument = async (fileInfo) => {
     to = await ext().finally();
     console.log('File will by converted to : "' + to + '" format.');
     output = appRoot + "/public/loads/" + fileInfo.originName + '.' + to;
-    let converting = memoize(async () => javaconv(converter, to, file, output));
-    let convertDon = await converting;
-    return convertDon;
-    // return await javaconv(converter, to, file, output);
+    let converting = memoize(async () => {return javaconv(converter, to, file, output)});
+    return await converting();
+    // return convertDon;
   } else {
     to = 'html';
     output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
-    let converting = memoize(async () => javaconv(converter, to, file, output));
-    let convertDon = await converting;
-    return convertDon;
+    let converting = memoize(async () => {return javaconv(converter, to, file, output)});
+    return await converting();
+    // return convertDon;
   }
 }
 
