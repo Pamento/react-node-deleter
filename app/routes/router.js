@@ -42,7 +42,27 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
+
+
+
+
+
+
+
+// router.post('/files', (req,res)=>{
+
+//   console.log('First Route /files : hole request upcoming ::_:\n',req.body);
+
+// })
+
 router.post('/files', upload.single('converted'), (req, res) => {
+  console.log('body \n',req);
+let bu = JSON.parse(req.body.styles);
+console.log(typeof bu);
+console.log(bu.color);
+console.log(bu.fontSize);
+
+  // console.log(JSON.parse(req.body.styles.style));
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
     newFileName = newNameForUpComingFile,
     output = appRoot + "/public/loads/",

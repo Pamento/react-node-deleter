@@ -10,8 +10,13 @@ class FileInput extends Component {
 
   fileToUpload = (e) => {
     let file = e.target.files[0];
+    let styles = {
+        'color': 'red',
+        'fontSize': 14
+    }
     let data = new FormData();
     data.append('converted',file);
+    data.append('styles',JSON.stringify(styles));
     this.props.actions.uploadFile(data);
     console.log('THIS.props __in__ UPLOADFILE ',this.props)
     // let head = file.name;

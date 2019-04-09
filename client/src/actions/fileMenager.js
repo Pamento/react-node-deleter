@@ -20,7 +20,11 @@ export const deleteFile = () => ({
 export const uploadFile = (file) => {
 	return async (dispatch) => {
     // this.props.actions.uploadfile;
-    // axios.post('/files', data)...
+		// axios.post('/files', data)...
+		// let data = {"file": file,
+		// "variable1":{
+		// 	"color":"red",}
+	// }
     axios.post( 'http://localhost:3000/files', file)
       .then(function(res){
 				console.log('server RESPONS :',res);
