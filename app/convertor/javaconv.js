@@ -10,21 +10,6 @@ const fs = require('fs');
 
 const javaconv = (converter, to, file, output, style) => {
   console.log('javaconv')
-  console.log('converter :\n', converter);
-  console.log('to  :\n', to);
-  console.log('file  :\n', file);
-  console.log('output  :\n', output);
-  console.log('style  :\n', style);
-  console.log('typeof style  :\n', typeof style);
-  console.log('\n\n');
-  console.log('######################################################################');
-  if (typeof style == 'undefined' || undefined) {
-    console.log('style params NULL ');
-  } else {
-    console.log('style params Ok ');
-  }
-  console.log('######################################################################');
-  console.log('\n\n');
   const command = 'java',
     options = { shell: true };
   let args = [];
@@ -36,21 +21,15 @@ const javaconv = (converter, to, file, output, style) => {
     ];
     console.log('args :\n',args);
   } else {
-    const fontFamily = style.fontFamily || 'Arial',
-      fontSize = style.fontSize || 16,
-      lineHeight = style.lineHeight || null,
-      letterSpacing = style.letterSpacing || 0,
-      wordSpacing = style.wordSpacing || 4;
+    // const fontFamily = style.fontFamily || 'Arial',
+    //   fontSize = style.fontSize || 16,
+    //   lineHeight = style.lineHeight || null,
+    //   letterSpacing = style.letterSpacing || 0,
+    //   wordSpacing = style.wordSpacing || 4;
     args = ['-jar', converter,
       '-f', to,
-      '-Dfn', fontFamily,
-      '-Dfs', fontSize,
-      '-Dil', lineHeight,
-      '-Dls', letterSpacing,
-      '-Dws', wordSpacing,
       '-i', file,
-      '-o', output,
-
+      '-o', output
     ];
     console.log('args :\n',args);
   }

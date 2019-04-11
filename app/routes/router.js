@@ -43,12 +43,11 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/files', upload.single('converted'), (req, res) => {
-  console.log('body \n',req.body);
-  console.log('pur style :\n',req.body.styles);
-  console.log('typeof style :\n',typeof req.body.styles);
-  let styles = JSON.parse(req.body.styles);
-  console.log(typeof styles);
-  console.log(styles.fontSize);
+  console.log('.');
+  console.log('.');
+  console.log('.');
+  console.log('.');
+  console.log('.');
 
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
       newFileName = newNameForUpComingFile,
@@ -84,27 +83,25 @@ router.post('/files', upload.single('converted'), (req, res) => {
   } else {
     saveFaileStat();
   }
-  // if(req.body.styles !== undefined || 'undefined' ) {
-  //   stylesCss = req.body.styles;
-  // } else {
-  //   stylesCss = '{}';
-  // }
-
-
 
   convertDocument(fileInfo).then(value => {
-
+console.log('#################################################### router Value #########');
+console.log('router value :\n',value);
+console.log('#################################################### router Value #########');
     let doc = value();
     doc.then(contentHtml => {
       console.log("node sending data :", typeof contentHtml);
+      console.log('#################################################### router contentHtml #########');
+console.log('router value :\n',contentHtml);
+console.log('#################################################### router contentHtml #########');
       res.status(200).send(contentHtml);
     }).catch(err => {
       res.status(500).send('Please try another time.');
-      console.error('Error on server', err);
+      console.error('Error on server for send response', err);
     });
   }).catch(err => {
     res.status(500).send('Please try another time.');
-    console.error('Error on server', err);
+    console.error('Error on server for send response', err);
   });
 });
 
