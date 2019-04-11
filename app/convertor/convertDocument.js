@@ -14,13 +14,14 @@ const convertDocument = async (fileInfo) => {
   let file = appRoot + "/" + fileInfo.src;
   let converter = appRoot + '/app/convertor/convert-0.0.1-SNAPSHOT.jar';
   let output;
+  let style = fileInfo.style;
 
   if (fileInfo.extention === 'html') {
     let ext = findInMdbJson(fileInfo.originName);
     to = await ext().finally();
     console.log('File will by converted to : "' + to + '" format.');
-    output = appRoot + "/public/loads/" + fileInfo.originName + '.' + to;
-    let converting = memoize(async () => {return javaconv(converter, to, file, output)});
+    output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
+    let converting = memoize(async () => {return javaconv(converter, to, file, output, style)});
     return await converting();
     // return convertDon;
   } else {

@@ -42,45 +42,55 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
-
-
-
-
-
-
-
-// router.post('/files', (req,res)=>{
-
-//   console.log('First Route /files : hole request upcoming ::_:\n',req.body);
-
-// })
-
 router.post('/files', upload.single('converted'), (req, res) => {
-  console.log('body \n',req);
-let bu = JSON.parse(req.body.styles);
-console.log(typeof bu);
-console.log(bu.color);
-console.log(bu.fontSize);
+  console.log('body \n',req.body);
+  console.log('pur style :\n',req.body.styles);
+  console.log('typeof style :\n',typeof req.body.styles);
+  let styles = JSON.parse(req.body.styles);
+  console.log(typeof styles);
+  console.log(styles.fontSize);
 
-  // console.log(JSON.parse(req.body.styles.style));
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
-    newFileName = newNameForUpComingFile,
-    output = appRoot + "/public/loads/",
-    extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.') + 1, req.file.originalname.length),
+      newFileName = newNameForUpComingFile,
+      extention = req.file.originalname.substring(req.file.originalname.lastIndexOf('.') + 1, req.file.originalname.length),
+      stylesCss = '{}',
+      fileInfo;
+
+  function styleOfFile() {
+    if(req.body.styles !== undefined || 'undefined' ) {
+      stylesCss = req.body.styles;
+      console.log('\n');
+      console.log('Catch style');
+      console.log('\n');
+    } else {
+      stylesCss = '{}';
+    }
+  }
+  function saveFaileStat() {
     fileInfo = {
       src: req.file.path,
       originFileName: req.file.originalname,
       originName: name,
       name: newFileName,
       extention: extention,
-      output: output
+      style: stylesCss // style = {};
     }
-
-  if (fileInfo.extention === 'html') {
-    console.log('_');
-  } else {
     saveFilesInfos(fileInfo);
   }
+
+  if (extention === 'html') {
+    styleOfFile();
+    saveFaileStat();
+  } else {
+    saveFaileStat();
+  }
+  // if(req.body.styles !== undefined || 'undefined' ) {
+  //   stylesCss = req.body.styles;
+  // } else {
+  //   stylesCss = '{}';
+  // }
+
+
 
   convertDocument(fileInfo).then(value => {
 

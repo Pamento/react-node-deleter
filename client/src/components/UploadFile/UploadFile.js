@@ -10,9 +10,21 @@ class FileInput extends Component {
 
   fileToUpload = (e) => {
     let file = e.target.files[0];
+    /**
+     * @var styles values in the pixels
+     * @key fontFamily: according to user choice
+     * @key fontSize: normal current velue = 16px
+     * @key lineHeight: default __'null'__ because this value is/(must by...) in proportional relation with fontSize.
+     * Example for font-family 'Arial': font-size = 16px, proportionaly lineHeight = 20.
+     * @key letterSpacing: default value = 0.
+     * @key wordSpacing: default value = 4px;
+     */
     let styles = {
-        'color': 'red',
-        'fontSize': 14
+        'fontFamily': 'Arial',
+        'fontSize': 16,
+        'lineHeight': 20,
+        'letterSpacing': 0,
+        'wordSpacing': 4
     }
     let data = new FormData();
     data.append('converted',file);

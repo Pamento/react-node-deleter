@@ -8,12 +8,52 @@ const spawn = require('child_process').spawn;
 const fs = require('fs');
 
 
-const javaconv = (converter, to, file, output) => {
+const javaconv = (converter, to, file, output, style) => {
+  console.log('javaconv')
+  console.log('converter :\n', converter);
+  console.log('to  :\n', to);
+  console.log('file  :\n', file);
+  console.log('output  :\n', output);
+  console.log('style  :\n', style);
+  console.log('typeof style  :\n', typeof style);
+  console.log('\n\n');
+  console.log('######################################################################');
+  if (typeof style == 'undefined' || undefined) {
+    console.log('style params NULL ');
+  } else {
+    console.log('style params Ok ');
+  }
+  console.log('######################################################################');
+  console.log('\n\n');
+  const command = 'java',
+    options = { shell: true };
+  let args = [];
+  if (typeof style == 'undefined') {
+    args = ['-jar', converter,
+      '-f', to,
+      '-i', file,
+      '-o', output
+    ];
+    console.log('args :\n',args);
+  } else {
+    const fontFamily = style.fontFamily || 'Arial',
+      fontSize = style.fontSize || 16,
+      lineHeight = style.lineHeight || null,
+      letterSpacing = style.letterSpacing || 0,
+      wordSpacing = style.wordSpacing || 4;
+    args = ['-jar', converter,
+      '-f', to,
+      '-Dfn', fontFamily,
+      '-Dfs', fontSize,
+      '-Dil', lineHeight,
+      '-Dls', letterSpacing,
+      '-Dws', wordSpacing,
+      '-i', file,
+      '-o', output,
 
-  const command = 'java';
-  const options = { shell: true };
-  const args = ['-jar', converter, '-f', to, '-i', file, '-o', output];
-
+    ];
+    console.log('args :\n',args);
+  }
 
   let convert = () => new Promise((resolve, reject) => {
 
@@ -29,17 +69,18 @@ const javaconv = (converter, to, file, output) => {
     });
     proc.stdout.on('data', () => {
       console.log('convert in progress ...');
-    })
+    });
     proc.stdout.on('end', () => {
       fs.readFile(output, (err, content) => {
         if (err) throw err;
-        resolve(content.toString())
-      })
+        console.log('I pass by bypass; javaconv proc.stdout.on.end');
+        resolve(content.toString());
+      });
     });
     proc.stdout.on('error', reject);
     proc.stderr.on('data', (data) => {
       console.error('child_process.stderr.on Error !', data);
-    })
+    });
   });
 
   convert.stream = srcStream => {
