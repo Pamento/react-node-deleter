@@ -26,6 +26,13 @@ class FileInput extends Component {
         'letterSpacing': 0,
         'wordSpacing': 4
     }
+    // let styles = {
+        // 'fontFamily': null,
+        // 'fontSize': null,
+        // 'lineHeight': null,
+        // 'letterSpacing': null,
+        // 'wordSpacing': null
+    // }
     let data = new FormData();
     data.append('converted',file);
     data.append('styles',JSON.stringify(styles));

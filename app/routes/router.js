@@ -46,8 +46,12 @@ router.post('/files', upload.single('converted'), (req, res) => {
   console.log('.');
   console.log('.');
   console.log('.');
+  console.log('body styles ',req.body.styles);
   console.log('.');
-  console.log('.');
+  console.log('|');
+  console.log('|');
+  console.log(' /');
+  console.log("'");
 
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
       newFileName = newNameForUpComingFile,
@@ -85,14 +89,14 @@ router.post('/files', upload.single('converted'), (req, res) => {
   }
 
   convertDocument(fileInfo).then(value => {
-console.log('#################################################### router Value #########');
-console.log('router value :\n',value);
-console.log('#################################################### router Value #########');
+console.log('---------------------------------------------------- router Value #########');
+console.log('router value :\n',typeof value);
+console.log('---------------------------------------------------- router Value #########');
     let doc = value();
     doc.then(contentHtml => {
       console.log("node sending data :", typeof contentHtml);
       console.log('#################################################### router contentHtml #########');
-console.log('router value :\n',contentHtml);
+console.log('router value :\n',typeof contentHtml);
 console.log('#################################################### router contentHtml #########');
       res.status(200).send(contentHtml);
     }).catch(err => {

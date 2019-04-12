@@ -9,29 +9,49 @@ const fs = require('fs');
 
 
 const javaconv = (converter, to, file, output, style) => {
-  console.log('javaconv')
+  console.log('javaconv');
   const command = 'java',
     options = { shell: true };
   let args = [];
   if (typeof style == 'undefined') {
-    args = ['-jar', converter,
+    args = [
+      '-jar', converter,
       '-f', to,
       '-i', file,
       '-o', output
     ];
-    console.log('args :\n',args);
+    console.log('args :\n', args.length);
   } else {
-    // const fontFamily = style.fontFamily || 'Arial',
-    //   fontSize = style.fontSize || 16,
-    //   lineHeight = style.lineHeight || null,
-    //   letterSpacing = style.letterSpacing || 0,
-    //   wordSpacing = style.wordSpacing || 4;
-    args = ['-jar', converter,
+
+    const styles = JSON.parse(style);
+    const fontFamily = styles.fontFamily || 'Arial',
+      fontSize = styles.fontSize || 16,
+      letterSpacing = styles.letterSpacing || 0,
+      wordSpacing = styles.wordSpacing || 4,
+      lineHeight = styles.lineHeight || 20;
+    console.log('\n');
+    console.log('styles convert to html :\n', typeof styles);
+    console.log('styles convert to html :\n', styles);
+    console.log('\n');
+    console.log("styles['fontFamily'] :\n", styles['fontFamily']);
+    console.log("styles.fontFamily :\n", styles.fontFamily);
+    console.log('fontSize :\n', styles['fontSize']);
+    console.log('letterSpacing :\n', styles['letterSpacing']);
+    console.log('wordSpacing :\n', styles['wordSpacing']);
+    console.log('interline :\n', styles['lineHeight']);
+    console.log('\n');
+    args = [
+      '-jar', converter,
       '-f', to,
       '-i', file,
-      '-o', output
+      '-o', output,
+      '--fontName', fontFamily,
+      '--fontSize', fontSize,
+      '--letterSpacing', letterSpacing,
+      '--wordSpacing', wordSpacing,
+      '--interline', lineHeight
     ];
-    console.log('args :\n',args);
+    console.log('args(18) :\n', args);
   }
 
   let convert = () => new Promise((resolve, reject) => {
@@ -51,6 +71,7 @@ const javaconv = (converter, to, file, output, style) => {
     });
     proc.stdout.on('end', () => {
       fs.readFile(output, (err, content) => {
+        console.log('ERROR _____ on output open', output)
         if (err) throw err;
         console.log('I pass by bypass; javaconv proc.stdout.on.end');
         resolve(content.toString());

@@ -37,13 +37,14 @@ const convertDocument = async (fileInfo) => {
       //   let data = content.toString();
       //   return data;}
       // });
-      let htmlToBack = (isAllReadyHtml) => new Promise((resolve, reject) => {
+      let htmlToBack = () => new Promise((resolve, reject) => {
         let to = '';
     
         readFileAsync(isAllReadyHtml,(err, content) => {
           if (err) reject(err);
         })
           .then(content => {
+            console.log(' ___HTML go back to USER !')
             resolve(to = content.toString());
           })
           .catch(err => {

@@ -6,23 +6,19 @@ const { promisify } = require("util");
 const readFileAsync = promisify(fs.readFile);
 
 const findInMdbJson = (fileToFind) => {
-console.log('________________________ IN ___________________________ find');
   let find = () => new Promise((resolve, reject) => {
     let to = '';
-    console.log('______________________ DEEP _____________________________ find');
 
     readFileAsync(fileDir,(err, content) => {
       if (err) reject(err);
     })
       .then(content => {
-        console.log('______________________ DEEP content _____________________________ find\n',typeof content);
         let fexist = [], file,
           jsonFile = content.toString();
-          console.log('______________________ DEEP then promise _____________________________ find',jsonFile);
 
         if ((jsonFile === '') || (typeof jsonFile === 'undefined')) {
           to = 'html';
-          console.log('in find file extention : html :: __ :: __ :: __ :: __ :: __ :',to);
+          console.log('______________________________________in find file extention : html ___________________ :',to);
         } else {
           var parseJson = JSON.parse(jsonFile);
           jsonFile = parseJson;
@@ -39,12 +35,12 @@ console.log('________________________ IN ___________________________ find');
             to = 'html'
           } else {
             to = file[fileToFind].extention;
-            console.log('find ext : doc ? :: __ :: __ :: __ :: __ :: __ :',to);
+            console.log('______________________________________find ext : doc ? ___________________ :',to);
           }
 
         }
         resolve(to);
-        console.log('find ext : extention :: __ :: __ :: __ :: __ :: __ :',to);
+        console.log('______________________________________find ext : extention ___________________ :',to);
       })
       .catch(err => {
         console.error('Error in findFileExtention on readFileAsync()\n', err);
