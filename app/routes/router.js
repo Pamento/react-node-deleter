@@ -72,7 +72,7 @@ router.post('/files', upload.single('converted'), (req, res) => {
   function saveFaileStat() {
     fileInfo = {
       src: req.file.path,
-      originFileName: req.file.originalname,
+      originNameWithExtention: req.file.originalname,
       originName: name,
       name: newFileName,
       extention: extention,

@@ -20,7 +20,6 @@ const convertDocument = async (fileInfo) => {
   let style = fileInfo.style;
 
   if (fileInfo.extention === 'html') {
-    console.log('in html case >>>>>>>>>>>>>> before search extention >>>>>>>>>>>>>>>>>>> html');
     let ext = findInMdbJson(fileInfo.originName);
     to = await ext();
     // to = await ext().finally();
@@ -31,15 +30,9 @@ const convertDocument = async (fileInfo) => {
 
     if (to === 'html') {
       const isAllReadyHtml = appRoot + '/' + fileInfo.src;
-      // const htmlToBack = async () => readFileAsync(isAllReadyHtml, (err, content) => {
-      //   if (err) throw err;
-      //   else {
-      //   let data = content.toString();
-      //   return data;}
-      // });
       let htmlToBack = () => new Promise((resolve, reject) => {
         let to = '';
-    
+
         readFileAsync(isAllReadyHtml,(err, content) => {
           if (err) reject(err);
         })
@@ -51,28 +44,12 @@ const convertDocument = async (fileInfo) => {
             console.error('Error in converetDocument on readFileAsync()\n', err);
           });
       });
-      // const htmlToBack = memoize(async () => readFileAsync(isAllReadyHtml, (err, content) => {
-        // if (err) throw err;
-      // }));
-      // htmlToBack()
-      //   .then(content => {
-      //     let data = content.toString();
-      //     console.log('\n');
-      //     console.log('convert doc');
-      //     console.log('typeof data', typeof data);
-      //     console.log('\n');
-      //     return data;
-      //   })
-      //   .catch(err => { throw err });
-      // console.log('data :_:\n', htmlToBack);
       return htmlToBack;
 
     } else {
-      console.log('in html case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> html');
       output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
       let converting = memoize(async () => { return javaconv(converter, to, file, output, style) });
       return await converting();
-      // return convertDon;
     }
 
   } else {
@@ -80,7 +57,6 @@ const convertDocument = async (fileInfo) => {
     output = appRoot + "/public/loads/" + fileInfo.name + '.' + to;
     let converting = memoize(async () => { return javaconv(converter, to, file, output) });
     return await converting();
-    // return convertDon;
   }
 }
 

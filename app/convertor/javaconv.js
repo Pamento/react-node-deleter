@@ -9,7 +9,6 @@ const fs = require('fs');
 
 
 const javaconv = (converter, to, file, output, style) => {
-  console.log('javaconv');
   const command = 'java',
     options = { shell: true };
   let args = [];
@@ -20,7 +19,6 @@ const javaconv = (converter, to, file, output, style) => {
       '-i', file,
       '-o', output
     ];
-    console.log('args :\n', args.length);
   } else {
 
     const styles = JSON.parse(style);
@@ -29,17 +27,6 @@ const javaconv = (converter, to, file, output, style) => {
       letterSpacing = styles.letterSpacing || 0,
       wordSpacing = styles.wordSpacing || 4,
       lineHeight = styles.lineHeight || 20;
-    console.log('\n');
-    console.log('styles convert to html :\n', typeof styles);
-    console.log('styles convert to html :\n', styles);
-    console.log('\n');
-    console.log("styles['fontFamily'] :\n", styles['fontFamily']);
-    console.log("styles.fontFamily :\n", styles.fontFamily);
-    console.log('fontSize :\n', styles['fontSize']);
-    console.log('letterSpacing :\n', styles['letterSpacing']);
-    console.log('wordSpacing :\n', styles['wordSpacing']);
-    console.log('interline :\n', styles['lineHeight']);
-    console.log('\n');
     args = [
       '-jar', converter,
       '-f', to,
@@ -51,7 +38,6 @@ const javaconv = (converter, to, file, output, style) => {
       '--wordSpacing', wordSpacing,
       '--interline', lineHeight
     ];
-    console.log('args(18) :\n', args);
   }
 
   let convert = () => new Promise((resolve, reject) => {
@@ -59,11 +45,11 @@ const javaconv = (converter, to, file, output, style) => {
     let proc = spawn(command, args, options);
 
     proc.on('error', (error, reject) => {
-      console.error('child_process.on Error !', error);
+      console.error('child_process.on Error !\n', error);
       reject
     });
     proc.stdout.on('error', (error, reject) => {
-      console.error('child_process.stdout.on Error !', error);
+      console.error('child_process.stdout.on Error !\n', error);
       reject
     });
     proc.stdout.on('data', () => {
@@ -71,15 +57,13 @@ const javaconv = (converter, to, file, output, style) => {
     });
     proc.stdout.on('end', () => {
       fs.readFile(output, (err, content) => {
-        console.log('ERROR _____ on output open', output)
         if (err) throw err;
-        console.log('I pass by bypass; javaconv proc.stdout.on.end');
         resolve(content.toString());
       });
     });
     proc.stdout.on('error', reject);
     proc.stderr.on('data', (data) => {
-      console.error('child_process.stderr.on Error !', data);
+      console.error('child_process.stderr.on Error !\n', data);
     });
   });
 

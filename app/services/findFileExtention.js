@@ -18,7 +18,6 @@ const findInMdbJson = (fileToFind) => {
 
         if ((jsonFile === '') || (typeof jsonFile === 'undefined')) {
           to = 'html';
-          console.log('______________________________________in find file extention : html ___________________ :',to);
         } else {
           var parseJson = JSON.parse(jsonFile);
           jsonFile = parseJson;
@@ -35,12 +34,10 @@ const findInMdbJson = (fileToFind) => {
             to = 'html'
           } else {
             to = file[fileToFind].extention;
-            console.log('______________________________________find ext : doc ? ___________________ :',to);
           }
 
         }
         resolve(to);
-        console.log('______________________________________find ext : extention ___________________ :',to);
       })
       .catch(err => {
         console.error('Error in findFileExtention on readFileAsync()\n', err);
