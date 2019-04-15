@@ -19,13 +19,14 @@ class FileInput extends Component {
      * @key letterSpacing: default value = 0.
      * @key wordSpacing: default value = 4px;
      */
-    let styles = {
-      'fontFamily': 'URW Gothic L',
-      'fontSize': 24,
-      'lineHeight': 30,
-      'letterSpacing': 10,
-      'wordSpacing': 14
-    }
+    // let styles = {
+    //   'fontFamily': 'URW Gothic L',
+    //   'fontSize': 24,
+    //   'lineHeight': 30,
+    //   'letterSpacing': 10,
+    //   'wordSpacing': 14
+    // }
+    let styles = {};
     let data = new FormData();
     data.append('converted',file);
     data.append('styles',JSON.stringify(styles));

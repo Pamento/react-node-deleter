@@ -15,6 +15,7 @@ const extentionFinder = require("../services/extentionFinder");
 const path = require('path');
 const appRoot = path.dirname(require.main.filename);
 const crypto = require('crypto');
+const deleteFile = require('../services/deleteFiles');
 const del = require('del');
 
 (async () => {
@@ -43,15 +44,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/files', upload.single('converted'), (req, res) => {
-  console.log('.');
-  console.log('.');
-  console.log('.');
-  console.log('body styles ',req.body.styles);
-  console.log('.');
-  console.log('|');
-  console.log('|');
-  console.log(' /');
-  console.log("'");
 
   let name = req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')),
       newFileName = newNameForUpComingFile,
@@ -62,9 +54,6 @@ router.post('/files', upload.single('converted'), (req, res) => {
   function styleOfFile() {
     if(req.body.styles !== undefined || 'undefined' ) {
       stylesCss = req.body.styles;
-      console.log('\n');
-      console.log('Catch style');
-      console.log('\n');
     } else {
       stylesCss = '{}';
     }
@@ -89,22 +78,22 @@ router.post('/files', upload.single('converted'), (req, res) => {
   }
 
   convertDocument(fileInfo).then(value => {
-console.log('---------------------------------------------------- router Value #########');
-console.log('router value :\n',typeof value);
-console.log('---------------------------------------------------- router Value #########');
     let doc = value();
     doc.then(contentHtml => {
       console.log("node sending data :", typeof contentHtml);
-      console.log('#################################################### router contentHtml #########');
-console.log('router value :\n',typeof contentHtml);
-console.log('#################################################### router contentHtml #########');
       res.status(200).send(contentHtml);
+      deleteFile(fileInfo.name);
+
     }).catch(err => {
       res.status(500).send('Please try another time.');
+      deleteFile(fileInfo.name);
+
       console.error('Error on server for send response', err);
     });
   }).catch(err => {
     res.status(500).send('Please try another time.');
+    deleteFile(fileInfo.name);
+
     console.error('Error on server for send response', err);
   });
 });
